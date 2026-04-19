@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 Route::resource('categories', CategoryController::class);
-Route::resource('items', CategoryController::class);
-Route::resource('users', CategoryController::class);
+Route::resource('items', ItemController::class);
+Route::resource('users', UserController::class);
+
 
