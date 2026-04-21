@@ -31,7 +31,35 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_active' => 'required|boolean',
+        ],
+        [
+            'name.required' => 'The item name is required.',
+            'description.required' => 'The item description is required.',
+            'price.required' => 'The item price is required.',
+            'category_id.required' => 'The category is required.',
+            'img.required' => 'The item image is required.',
+            'img.max' => 'The item image must not exceed 2MB.',
+            'is_active.required' => 'The active status is required.',
+            'is_active.boolean' => 'The active status must be true or false.',
+        ]);
+
+        if ($request->hasFile('img')) {
+            $imageName = time() . '.' . $request->file('img')->getClientOriginalExtension();
+            $request->file('img')->move(public_path('img_item_upload'), $imageName);
+            $validatedData['img'] = $imageName;
+        } else {
+            $imageName = null;
+        }
+
+        Item::create($validatedData);
+        return redirect()->route('items.index')->with('success', 'Item created successfully.');
     }
 
     /**

@@ -12,7 +12,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form class="form " action="{{ route('items.store') }}" enctype="multipart/form-data">
+            <form class="form " action="{{ route('items.store') }}" enctype="multipart/form-data" method="POST">
                 @csrf
                 <div class="form-body">
                     <div class="row">
@@ -41,8 +41,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="image">Gambar</label>
-                                <input type="file" class="form-control" id="image" name="image" required>
+                                <label for="img">Gambar</label>
+                                <input type="file" class="form-control" id="img" name="img" required>
                             </div>
                             <div class="form-group">
                                 <label for="is_active">Status</label>
